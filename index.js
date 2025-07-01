@@ -7,6 +7,7 @@ let squares = [];
 let currentSnake = [0,1,2];
 let direction = 1;
 const width = 40;
+const height = 20;
 let appleIndex = 0;
 let timeId = 0
 
@@ -26,6 +27,7 @@ function createGrid(){
         square.classList.add('square');
         grid.appendChild(square);
         squares.push(square);
+        // square.textContent = i;
     }
 }
 
@@ -66,21 +68,23 @@ function move(){
     const head = currentSnake[currentSnake.length-1]+direction;
 
     if(
-        (head + width > width*width && direction === width) || 
-        (head - width < 0 && direction === -width) || 
-        (head % width === 0 && direction === -1 ) || 
-        (head % width === width-1 && direction === 1) ||
+        (head > width*height && direction === width) || 
+        (head < 0 && direction === -width) || 
+        (currentSnake[currentSnake.length-1] % width === 0 && direction === -1 ) || 
+        (currentSnake[currentSnake.length-1] % width === width-1 && direction === 1) ||
         squares[head].classList.contains('snake')
     ) {
 
         gameOver.style.display = 'block';
+        console.log(head);
         return clearInterval(timeId)
     }
 
+    // FIRST SNAKE'S HEAD WILL MOVE FORWARD
     currentSnake.push(head); // Remember!! "push" returns length while "pop" returns the last element no need to use this as variable
     squares[head].classList.add('snake');
 
-    
+    // THEN IF IT COUNTERS ANY APPLE ITS SIZE WILL INCREASE
     if(squares[head].classList.contains('apple')){
         score++
         scoreDisplay.textContent = score;
@@ -91,7 +95,7 @@ function move(){
         clearInterval(timeId)
         timeId = setInterval(move,intervalTime);
     }else{
-          
+        // THEN ITS TAIL CONTINUES
         const tail = currentSnake.shift();
         squares[tail].classList.remove('snake');
     }
