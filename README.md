@@ -14,3 +14,6 @@ A classic Snake game built with JavaScript, where you control a growing snake on
 
 - HTML5 + CSS3
 - JavaScript (ES6+)
+
+
+Live link: https://snake-game-orpin-gamma.vercel.app
